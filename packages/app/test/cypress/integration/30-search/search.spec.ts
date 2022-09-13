@@ -91,14 +91,20 @@ context('Search all pages', () => {
     })
 
     cy.get('.rbt-input-main').type(`${searchText}`);
-    cy.screenshot(`${ssPrefix}2-insert-search-text`, { capture: 'viewport'});
+    cy.screenshot(`${ssPrefix}2-insert-search-text`, {
+      capture: 'viewport',
+      blackout: ['[data-hide-in-vrt="true"]','[data-line="2"]:eq(0) > a > img']
+    });
     cy.get('.rbt-input-main').type('{enter}');
 
 
     cy.getByTestid('search-result-base').should('be.visible');
     cy.getByTestid('search-result-list').should('be.visible');
     cy.getByTestid('search-result-content').should('be.visible');
-    cy.screenshot(`${ssPrefix}3-search-page-results`, { capture: 'viewport'});
+    cy.screenshot(`${ssPrefix}3-search-page-results`, {
+      capture: 'viewport',
+      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:nth-child(2) > a > img']
+    });
 
     cy.getByTestid('open-page-item-control-btn').eq(1).click();
     cy.screenshot(`${ssPrefix}4-click-three-dots-menu`, {capture: 'viewport'});
@@ -152,14 +158,20 @@ context('Search all pages', () => {
     cy.visit('/');
     cy.get('.rbt-input').click();
     cy.get('.rbt-input-main').type(`${searchText}`);
-    cy.screenshot(`${ssPrefix}1-insert-search-text-with-tag`, { capture: 'viewport'});
+    cy.screenshot(`${ssPrefix}1-insert-search-text-with-tag`, {
+      capture: 'viewport',
+      blackout: ['[data-hide-in-vrt="true"]','[data-line="2"]:eq(0) > a > img']
+    });
     cy.get('.rbt-input-main').type('{enter}');
 
     cy.getByTestid('search-result-base').should('be.visible');
     cy.getByTestid('search-result-list').should('be.visible');
     cy.getByTestid('search-result-content').should('be.visible');
 
-    cy.screenshot(`${ssPrefix}2-search-with-tag-result`, {capture: 'viewport'});
+    cy.screenshot(`${ssPrefix}2-search-with-tag-result`, {
+      capture: 'viewport',
+      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:nth-child(2) > a > img']
+    });
     cy.getByTestid('open-page-item-control-btn').first().click();
     cy.screenshot(`${ssPrefix}3-click-three-dots-menu-search-with-tag`, {capture: 'viewport'});
 
@@ -172,7 +184,10 @@ context('Search all pages', () => {
     cy.getByTestid('search-result-base').should('be.visible');
     cy.getByTestid('search-result-list').should('be.visible');
     cy.getByTestid('search-result-content').should('be.visible');
-    cy.screenshot(`${ssPrefix}1-tag-order-click-tag-name`, {capture: 'viewport'});
+    cy.screenshot(`${ssPrefix}1-tag-order-click-tag-name`, {
+      capture: 'viewport',
+      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:nth-child(2) > a > img']
+    });
 
     cy.get('.grw-search-page-nav').within(() => {
       cy.get('button.dropdown-toggle').first().click({force: true});
