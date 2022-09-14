@@ -167,13 +167,16 @@ context('Search all pages', () => {
     cy.getByTestid('search-result-base').should('be.visible');
     cy.getByTestid('search-result-list').should('be.visible');
     cy.getByTestid('search-result-content').should('be.visible');
-
+    cy.get('#wiki').should('be.visible');
     cy.screenshot(`${ssPrefix}2-search-with-tag-result`, {
       capture: 'viewport',
-      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:nth-child(2) > a > img']
+      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:eq(0) > a > img']
     });
     cy.getByTestid('open-page-item-control-btn').first().click();
-    cy.screenshot(`${ssPrefix}3-click-three-dots-menu-search-with-tag`, {capture: 'viewport'});
+    cy.screenshot(`${ssPrefix}3-click-three-dots-menu-search-with-tag`, {
+      capture: 'viewport',
+      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:eq(0) > a > img']
+    });
 
   });
   it('Successfully order page search results by tag', () => {
@@ -186,7 +189,7 @@ context('Search all pages', () => {
     cy.getByTestid('search-result-content').should('be.visible');
     cy.screenshot(`${ssPrefix}1-tag-order-click-tag-name`, {
       capture: 'viewport',
-      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:nth-child(2) > a > img']
+      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:eq(0) > a > img']
     });
 
     cy.get('.grw-search-page-nav').within(() => {
@@ -197,7 +200,9 @@ context('Search all pages', () => {
     cy.getByTestid('search-result-base').should('be.visible');
     cy.getByTestid('search-result-list').should('be.visible');
     cy.getByTestid('search-result-content').should('be.visible');
-    cy.screenshot(`${ssPrefix}2-tag-order-by-relevance`);
+    cy.screenshot(`${ssPrefix}2-tag-order-by-relevance`,{
+      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:eq(0) > a > img']
+    });
 
     cy.get('.grw-search-page-nav').within(() => {
       cy.get('button.dropdown-toggle').first().click({force: true});
@@ -207,7 +212,9 @@ context('Search all pages', () => {
     cy.getByTestid('search-result-base').should('be.visible');
     cy.getByTestid('search-result-list').should('be.visible');
     cy.getByTestid('search-result-content').should('be.visible');
-    cy.screenshot(`${ssPrefix}3-tag-order-by-creation-date`);
+    cy.screenshot(`${ssPrefix}3-tag-order-by-creation-date`, {
+      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:eq(0) > a > img']
+    });
 
     cy.get('.grw-search-page-nav').within(() => {
       cy.get('button.dropdown-toggle').first().click({force: true});
@@ -217,7 +224,9 @@ context('Search all pages', () => {
     cy.getByTestid('search-result-base').should('be.visible');
     cy.getByTestid('search-result-list').should('be.visible');
     cy.getByTestid('search-result-content').should('be.visible');
-    cy.screenshot(`${ssPrefix}4-tag-order-by-last-update-date`);
+    cy.screenshot(`${ssPrefix}4-tag-order-by-last-update-date`,{
+      blackout: ['[data-hide-in-vrt="true"]','#wiki > p:eq(0) > a > img']
+    });
   });
 
 });
