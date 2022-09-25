@@ -298,6 +298,12 @@ module.exports = function(crowi, app) {
     return res.render('admin/audit-log');
   };
 
+  // DataTransfer
+  actions.dataTransfer = {};
+  actions.dataTransfer.index = (req, res) => {
+    return res.render('admin/data-transfer');
+  };
+
   // Importer management
   actions.importer = {};
   actions.importer.api = api;
