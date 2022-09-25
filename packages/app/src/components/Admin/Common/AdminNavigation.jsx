@@ -39,6 +39,7 @@ const AdminNavigation = (props) => {
       case 'search':                   return <><i className="icon-fw icon-magnifier"></i>       { t('Full Text Search Management') }</>;
       // TODO: Consider where to place the "AuditLog"
       case 'audit-log':                return <><i className="icon-fw icon-feed"></i>            { t('AuditLog')}</>;
+      case 'data-transfer':            return <><i className="icon-fw icon-arrow-right"></i>     { t('Growi To Growi Data Transfer')}</>;
       case 'cloud':                    return <><i className="icon-fw icon-share-alt"></i>       { t('to_cloud_settings')} </>;
       default:                         return <><i className="icon-fw icon-home"></i>            { t('Wiki Management Home Page') }</>;
     }
@@ -89,6 +90,7 @@ const AdminNavigation = (props) => {
         <MenuLink menu="user-groups"  isListGroupItems isActive={isActiveMenu('/user-groups')} />
         <MenuLink menu="search"       isListGroupItems isActive={isActiveMenu('/search')} />
         <MenuLink menu="audit-log"    isListGroupItems isActive={isActiveMenu('/audit-log')} />
+        <MenuLink menu="data-transfer" isListGroupItems isActive={isActiveMenu('/data-transfer')} />
         {growiCloudUri != null && growiAppIdForGrowiCloud != null
           && (
             <a
@@ -135,6 +137,7 @@ const AdminNavigation = (props) => {
             {isActiveMenu('/user-groups') &&       <MenuLabel menu="user-groups" />}
             {isActiveMenu('/search') &&            <MenuLabel menu="search" />}
             {isActiveMenu('/audit-log') &&         <MenuLabel menu="audit-log" />}
+            {isActiveMenu('/data-transfer') &&     <MenuLabel menu="data-transfer" />}
           </span>
         </button>
         <div className="dropdown-menu" aria-labelledby="dropdown-admin-navigation">

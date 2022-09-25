@@ -36,6 +36,7 @@ import AdminNavigation from '../components/Admin/Common/AdminNavigation';
 import Customize from '../components/Admin/Customize/Customize';
 import ExportArchiveDataPage from '../components/Admin/ExportArchiveDataPage';
 import FullTextSearchManagement from '../components/Admin/FullTextSearchManagement';
+import G2GDataTransfer from '../components/Admin/G2GDataTransfer';
 import ImportDataPage from '../components/Admin/ImportDataPage';
 import LegacySlackIntegration from '../components/Admin/LegacySlackIntegration/LegacySlackIntegration';
 import ManageExternalAccount from '../components/Admin/ManageExternalAccount';
@@ -110,6 +111,7 @@ Object.assign(componentMappings, {
   'admin-user-group-page': <UserGroupPage />,
   'admin-audit-log': <AuditLogManagement />,
   'admin-navigation': <AdminNavigation />,
+  'admin-g2g-data-transfer': <G2GDataTransfer />,
 });
 
 const renderMainComponents = () => {

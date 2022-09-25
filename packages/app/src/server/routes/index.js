@@ -137,6 +137,9 @@ module.exports = function(crowi, app) {
   // auditLog admin
   app.get('/admin/audit-log'                            , loginRequiredStrictly, adminRequired, admin.auditLog.index);
 
+  // data-transfer admin
+  app.get('/admin/data-transfer'                        , loginRequiredStrictly, adminRequired, admin.dataTransfer.index);
+
   // importer management for admin
   app.get('/admin/importer'                     , loginRequiredStrictly , adminRequired , admin.importer.index);
   app.post('/_api/admin/settings/importerEsa'   , loginRequiredStrictly , adminRequired , csrf, addActivity, admin.importer.api.validators.importer.esa(),admin.api.importerSettingEsa);
