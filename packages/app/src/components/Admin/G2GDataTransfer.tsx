@@ -6,6 +6,7 @@ import * as toastr from 'toastr';
 import AdminSocketIoContainer from '~/client/services/AdminSocketIoContainer';
 import { apiv3Get } from '~/client/util/apiv3-client';
 
+import CustomCopyToClipBoard from '../Common/CustomCopyToClipBoard';
 import { withUnstatedContainers } from '../UnstatedUtils';
 
 import SelectCollectionsModal from './ExportArchiveData/SelectCollectionsModal';
@@ -127,11 +128,14 @@ const G2GDataTransfer = (props: Props): JSX.Element => {
       <h2 className="border-bottom mt-5">別GROWIのデータをこのGROWIへ移行する</h2>
 
       <div className="form-group row mt-4">
-        <div className="col-3">
+        <div className="col-md-3">
           <button type="button" className="btn btn-primary w-100" onClick={publishTransferKey}>移行キーを発行する</button>
         </div>
-        <div className="col-9">
-          <input className="form-control" type="text" value={transferKey} readOnly />
+        <div className="col-md-9">
+          <div className="input-group-prepend mx-1">
+            <input className="form-control" type="text" value={transferKey} readOnly />
+            <CustomCopyToClipBoard textToBeCopied={transferKey} message="admin:slack_integration.copied_to_clipboard" />
+          </div>
         </div>
       </div>
 
