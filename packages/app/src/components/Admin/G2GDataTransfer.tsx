@@ -25,33 +25,25 @@ const G2GDataTransfer = (props: Props): JSX.Element => {
   const { adminSocketIoContainer } = props;
 
   const [collections, setCollections] = useState<any[]>([]);
-  const [zipFileStats, setZipFileStats] = useState<any[]>([]);
-  const [progressList, setProgressList] = useState<any[]>([]);
   const [isExportModalOpen, setExportModalOpen] = useState(false);
   const [isExporting, setExporting] = useState(false);
-  const [isZipping, setZipping] = useState(false);
+  // TODO: データのエクスポートが完了したことが分かるようにする
   const [isExported, setExported] = useState(false);
   const [transferKey, setTransferKey] = useState('');
 
   const fetchData = useCallback(async() => {
-    // TODO:: use apiv3.get
-    // eslint-disable-next-line no-unused-vars
     const [{ data: collectionsData }, { data: statusData }] = await Promise.all([
       apiv3Get<{collections: any[]}>('/mongo/collections', {}),
       apiv3Get<{status: { zipFileStats: any[], isExporting: boolean, progressList: any[] }}>('/export/status', {}),
     ]);
-    // TODO: toastSuccess, toastError
 
     // filter only not ignored collection names
     const filteredCollections = collectionsData.collections.filter((collectionName) => {
       return !IGNORED_COLLECTION_NAMES.includes(collectionName);
     });
 
-    const { zipFileStats, isExporting, progressList } = statusData.status;
     setCollections(filteredCollections);
-    setZipFileStats(zipFileStats);
-    setExporting(isExporting);
-    setProgressList(progressList);
+    setExporting(statusData.status.isExporting);
   }, []);
 
   const setupWebsocketEventHandler = useCallback(() => {
@@ -60,21 +52,12 @@ const G2GDataTransfer = (props: Props): JSX.Element => {
     // websocket event
     socket.on('admin:onProgressForExport', ({ currentCount, totalCount, progressList }) => {
       setExporting(true);
-      setProgressList(progressList);
-    });
-
-    // websocket event
-    socket.on('admin:onStartZippingForExport', () => {
-      setZipping(true);
     });
 
     // websocket event
     socket.on('admin:onTerminateForExport', ({ addedZipFileStat }) => {
-
       setExporting(false);
-      setZipping(false);
       setExported(true);
-      setZipFileStats(prev => prev.concat([addedZipFileStat]));
 
       // TODO: toastSuccess, toastError
       toastr.success(undefined, `New Archive Data '${addedZipFileStat.fileName}' is added`, {
