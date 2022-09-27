@@ -7,14 +7,9 @@ import { localeMetadatas } from '~/client/util/i18n';
 import { useCsrfToken } from '~/stores/context';
 
 type Props = {
-  userName: string
-  name: string
-  email: string
-}
-
-type SelectedLangType = {
-  id: number
-  displayName: string
+  userName?: string
+  name?: string
+  email?: string
 }
 
 const InstallerForm: FC<Props> = (props: Props) => {
@@ -23,7 +18,7 @@ const InstallerForm: FC<Props> = (props: Props) => {
 
   const [isValidUserName, setValidUserName] = useState(true);
   const [isSubmittingDisabled, setSubmittingDisabled] = useState(false);
-  const [selectedLang, setSelectedLang] = useState<SelectedLangType>({});
+  const [selectedLang, setSelectedLang] = useState<any>({});
 
   useEffect(() => {
     const meta = localeMetadatas.find(v => v.id === i18next.language);
@@ -68,7 +63,7 @@ const InstallerForm: FC<Props> = (props: Props) => {
 
   return (
     <div data-testid="installerForm" className={`login-dialog p-3 mx-auto${hasErrorClass}`}>
-      <div className="row">
+      <div className="row mt-4">
         <div className="col-md-12">
           <p className="alert alert-success">
             <strong>{ t('installer.create_initial_account') }</strong><br />

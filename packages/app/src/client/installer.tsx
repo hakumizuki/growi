@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
 
 import ReactDOM from 'react-dom';
 import { I18nextProvider } from 'react-i18next';
+import {
+  Nav, NavItem, NavLink,
+} from 'reactstrap';
 import { SWRConfig } from 'swr';
-
 
 import { swrGlobalConfiguration } from '~/utils/swr-utils';
 
@@ -16,15 +18,37 @@ const i18n = i18nFactory();
 
 const componentMappings = {};
 
+const InstallerContainer: FC = () => {
+  const [isCreateUserTab, setCreateUserTab] = useState(true);
+
+  return (
+    <div className="grw-custom-nav-tab">
+      <Nav className="nav-title text-center w-100">
+        <NavItem className={`col-6 p-0 ${isCreateUserTab ? 'active' : ''}`}>
+          <NavLink type="button" className="text-white" onClick={() => setCreateUserTab(true)}>
+            アカウント作成
+          </NavLink>
+        </NavItem>
+        <NavItem className={`col-6 p-0 ${isCreateUserTab ? '' : 'active'}`}>
+          <NavLink type="button" className="text-white" onClick={() => setCreateUserTab(false)}>
+            データ移行
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <hr className="my-0 grw-nav-slide-hr border-none" style={{ width: '50%', marginLeft: isCreateUserTab ? '0%' : '50%', borderColor: 'white' }} />
+    </div>
+  );
+};
+
 // render InstallerForm
-const installerFormContainerElem = document.getElementById('installer-form-container');
+const installerFormContainerElem = document.getElementById('installer-container');
 if (installerFormContainerElem) {
   const userName = installerFormContainerElem.dataset.userName;
   const name = installerFormContainerElem.dataset.name;
   const email = installerFormContainerElem.dataset.email;
 
   Object.assign(componentMappings, {
-    'installer-form-container': <InstallerForm userName={userName} name={name} email={email} />,
+    'installer-container': <InstallerForm userName={userName} name={name} email={email} />,
   });
 }
 
