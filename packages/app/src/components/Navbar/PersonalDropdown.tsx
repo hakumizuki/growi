@@ -1,23 +1,28 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { UserPicture } from '@growi/ui';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { useRipple } from 'react-use-ripple';
 
+
 import { toastError } from '~/client/util/apiNotification';
 import { apiv3Post } from '~/client/util/apiv3-client';
 import { useCurrentUser } from '~/stores/context';
 
-const PersonalDropdown = () => {
+import QuestionnaireModal from '../QuestionnaireModal';
+
+const PersonalDropdown = (): JSX.Element => {
   const { t } = useTranslation();
   const { data: currentUser } = useCurrentUser();
+
+  const [isQuestionnaireModalOpen, setQuestionnaireModalOpen] = useState(false);
 
   // ripple
   const buttonRef = useRef(null);
   useRipple(buttonRef, { rippleColor: 'rgba(255, 255, 255, 0.3)' });
 
-  const user = currentUser || {};
+  const user = currentUser;
 
   const logoutHandler = async() => {
     try {
@@ -28,6 +33,10 @@ const PersonalDropdown = () => {
       toastError(err);
     }
   };
+
+  if (user == null) {
+    return <></>;
+  }
 
   return (
     <>
@@ -69,8 +78,16 @@ const PersonalDropdown = () => {
 
         <div className="dropdown-divider"></div>
 
+        <button type="button" className="dropdown-item" onClick={() => setQuestionnaireModalOpen(true)}>
+          <i className="icon-fw icon-pencil"></i>{ t('Questionnaire') }
+        </button>
+
+        <div className="dropdown-divider"></div>
+
         <button type="button" className="dropdown-item" onClick={logoutHandler}><i className="icon-fw icon-power"></i>{ t('Sign out') }</button>
       </div>
+
+      <QuestionnaireModal isOpen={isQuestionnaireModalOpen} onClose={() => setQuestionnaireModalOpen(false)} />
 
     </>
   );
