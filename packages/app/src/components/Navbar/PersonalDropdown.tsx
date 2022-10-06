@@ -5,7 +5,6 @@ import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { useRipple } from 'react-use-ripple';
 
-
 import { toastError } from '~/client/util/apiNotification';
 import { apiv3Post } from '~/client/util/apiv3-client';
 import { useCurrentUser } from '~/stores/context';

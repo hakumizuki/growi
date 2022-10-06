@@ -1,20 +1,53 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { useTranslation } from 'next-i18next';
 import {
   Modal, ModalBody,
 } from 'reactstrap';
 
-import { apiv3Post } from '~/client/util/apiv3-client';
+import { useSiteUrl, useGrowiVersion } from '~/stores/context';
 
-type Props = {
+type ModalProps = {
   isOpen: boolean,
   onClose: () => void,
 };
 
-const QuestionnaireModal = (props: Props): JSX.Element => {
+const QuestionnaireCompletionModal = (props: ModalProps): JSX.Element => {
   const { t } = useTranslation();
+
   const { isOpen, onClose } = props;
+
+  return (
+    <Modal
+      size="lg"
+      isOpen={isOpen}
+      toggle={onClose}
+      centered
+    >
+      <ModalBody className="bg-primary overflow-hidden p-0" style={{ borderRadius: 8 }}>
+        <div className="bg-white m-2 p-4" style={{ borderRadius: 8 }}>
+          <div className="text-center">
+            <h2 className="my-4">GROWI サービス改善のためのアンケート</h2>
+            <p className="mb-1">アンケートの送信が完了しました。</p>
+            <p>アンケートのご回答誠にありがとうございました。</p>
+          </div>
+          <div className="text-center my-3">
+            <span style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={onClose}>閉じる</span>
+          </div>
+        </div>
+      </ModalBody>
+    </Modal>
+  );
+};
+
+const QuestionnaireModal = (props: ModalProps): JSX.Element => {
+  const { t } = useTranslation();
+
+  const { isOpen, onClose } = props;
+  const { data: siteUrl } = useSiteUrl();
+  const { data: growiVersion } = useGrowiVersion();
+
+  const [isQuestionnaireCompletionModal, setQuestionnaireCompletionModal] = useState(false);
 
   const submitHandler = useCallback(async(e) => {
     e.preventDefault();
@@ -22,19 +55,28 @@ const QuestionnaireModal = (props: Props): JSX.Element => {
     const formData = e.target.elements;
 
     const {
-      'form[name]': { value: name },
-      'form[password]': { value: password },
-      'form[username]': { value: username },
+      satisfaction: { value: satisfaction },
+      lengthOfExperience: { value: lengthOfExperience },
+      position: { value: position },
+      occupation: { value: occupation },
+      commentText: { value: commentText },
     } = formData;
 
-    const form = {
-      name,
-      password,
-      username,
+    const sendValues = {
+      satisfaction: Number(satisfaction),
+      lengthOfExperience,
+      position,
+      occupation,
+      commentText,
+      growiUri: siteUrl,
+      growiVersion,
     };
 
-    await apiv3Post('/', { form });
-  }, []);
+    // TODO: アンケート結果を送信する
+
+    onClose();
+    setQuestionnaireCompletionModal(true);
+  }, [growiVersion, onClose, siteUrl]);
 
   return (
     <>
@@ -42,7 +84,6 @@ const QuestionnaireModal = (props: Props): JSX.Element => {
         size="lg"
         isOpen={isOpen}
         toggle={onClose}
-        data-testid="page-accessories-modal"
         centered
       >
         <ModalBody className="bg-primary overflow-hidden p-0" style={{ borderRadius: 8 }}>
@@ -57,18 +98,18 @@ const QuestionnaireModal = (props: Props): JSX.Element => {
                 <label className="col-sm-5 col-form-label" htmlFor="satisfaction"><span className="badge badge-primary mr-2">必須</span>GROWI の満足度</label>
                 <select className="col-sm-7 form-control" name="satisfaction" id="satisfaction" required>
                   <option value="">▼ 選択してください</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
                 </select>
               </div>
               <div className="form-group row mt-3">
-                <label className="col-sm-5 col-form-label" htmlFor="LengthOfExperience">GROWI の利用歴</label>
+                <label className="col-sm-5 col-form-label" htmlFor="lengthOfExperience">GROWI の利用歴</label>
                 <select
-                  name="LengthOfExperience"
-                  id="LengthOfExperience"
+                  name="lengthOfExperience"
+                  id="lengthOfExperience"
                   className="col-sm-7 form-control"
                 >
                   <option value="">▼ 選択してください</option>
@@ -96,12 +137,13 @@ const QuestionnaireModal = (props: Props): JSX.Element => {
                 <button type="submit" className="btn btn-primary">回答する</button>
               </div>
               <div className="text-center my-3">
-                <span style={{ cursor: 'pointer' }} onClick={onClose}>閉じる</span>
+                <span style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={onClose}>閉じる</span>
               </div>
             </form>
           </div>
         </ModalBody>
       </Modal>
+      <QuestionnaireCompletionModal isOpen={isQuestionnaireCompletionModal} onClose={() => setQuestionnaireCompletionModal(false)} />
     </>
   );
 };
