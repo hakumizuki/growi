@@ -6,6 +6,10 @@ import {
 } from 'reactstrap';
 
 import { useSiteUrl, useGrowiVersion } from '~/stores/context';
+import axios from '~/utils/axios';
+import loggerFactory from '~/utils/logger';
+
+const logger = loggerFactory('growi:questionnaire');
 
 type ModalProps = {
   isOpen: boolean,
@@ -72,7 +76,14 @@ const QuestionnaireModal = (props: ModalProps): JSX.Element => {
       growiVersion,
     };
 
-    // TODO: アンケート結果を送信する
+    // TODO: せとうちなどにサーバーを建ててアンケート結果を送信する
+    // TODO: エラーハンドリングを適切に行う
+    try {
+      await axios.post('http://localhost:3003/questionnaire', sendValues);
+    }
+    catch (err) {
+      logger.error(err);
+    }
 
     onClose();
     setQuestionnaireCompletionModal(true);

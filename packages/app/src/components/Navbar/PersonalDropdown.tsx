@@ -78,7 +78,7 @@ const PersonalDropdown = (): JSX.Element => {
         <div className="dropdown-divider"></div>
 
         <button type="button" className="dropdown-item" onClick={() => setQuestionnaireModalOpen(true)}>
-          <i className="icon-fw icon-pencil"></i>{ t('Questionnaire') }
+          <i className="icon-fw icon-pencil"></i>アンケート
         </button>
 
         <div className="dropdown-divider"></div>
