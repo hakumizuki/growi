@@ -52,6 +52,8 @@
   "Sign up with Google Account": "Sign up with Google Account",
   "Sign in with Google Account": "Sign in with Google Account",
   "Sign up with this Google Account": "Sign up with this Google Account",
+  "Select": "Select",
+  "Required": "Required",
   "Example": "Example",
   "Taro Yamada": "John Doe",
   "List View": "List",
@@ -144,6 +146,7 @@
   "edited this page": "edited this page.",
   "List Drafts": "Drafts",
   "Deleted Pages": "Deleted Pages",
+  "Questionnaire": "Questionnaire",
   "Sign out": "Logout",
   "Disassociate": "Disassociate",
   "No bookmarks yet": "No bookmarks yet",
@@ -866,5 +869,26 @@
   "footer": {
     "bookmarks": "Bookmarks",
     "recently_created": "Recently Created"
+  },
+  "questionnaire": {
+    "title": "GROWI questionnaire for service improvement",
+    "successfully_submit": "Your survey has been submitted.",
+    "thanks_for_answer": "Thank you very much for taking the time to complete the survey.",
+    "more_satisfied_services": "We hope that GROWI customers will be even more satisfied with our services,",
+    "strive_to_improve_services": "we will strive to improve our services based on your feedback.",
+    "satisfaction_with_growi": "Satisfaction with GROWI",
+    "history_of_growi_use": "History of GROWI use",
+    "position": "Position",
+    "occupation": "Occupation",
+    "comment_on_growi": "Comment on GROWI",
+    "answer": "Answer",
+    "length_of_experience": {
+      "more_than_two_years": "More than 2 years",
+      "one_to_two_years": "More than 1 year but less than 2 years",
+      "six_months_to_one_year": "More than 6 months but less than 1 year",
+      "three_months_to_six_months": "More than 3 months but less than 6 months",
+      "one_month_to_three_months": "More than 1 month but less than 3 months",
+      "less_than_one_month": "Less than 1 month"
+    }
   }
 }
