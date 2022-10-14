@@ -5,6 +5,7 @@ import useSWRImmutable from 'swr/immutable';
 
 
 import { SupportedActionType } from '~/interfaces/activity';
+import { IResLayoutSetting } from '~/interfaces/customize';
 import { EditorConfig } from '~/interfaces/editor-settings';
 // import { CustomWindow } from '~/interfaces/global';
 import { RendererConfig } from '~/interfaces/services/renderer';
@@ -130,8 +131,8 @@ export const useRevisionIdHackmdSynced = (initialData?: Nullable<any>): SWRRespo
   return useStaticSWR<Nullable<any>, Error>('revisionIdHackmdSynced', initialData);
 };
 
-export const useDrawioUri = (initialData?: Nullable<string>): SWRResponse<Nullable<string>, Error> => {
-  return useStaticSWR<Nullable<string>, Error>('drawioUri', initialData);
+export const useDrawioUri = (initialData?: string): SWRResponse<string, Error> => {
+  return useStaticSWR('drawioUri', initialData, { fallbackData: 'https://embed.diagrams.net/' });
 };
 
 export const useHackmdUri = (initialData?: Nullable<string>): SWRResponse<Nullable<string>, Error> => {
@@ -256,6 +257,14 @@ export const useIsUploadableFile = (initialData?: boolean): SWRResponse<boolean,
 
 export const useShowPageLimitationXL = (initialData?: number): SWRResponse<number, Error> => {
   return useStaticSWR('showPageLimitationXL', initialData);
+};
+
+export const useLayoutSetting = (initialData?: IResLayoutSetting): SWRResponse<IResLayoutSetting, Error> => {
+  return useStaticSWR('layoutSetting', initialData);
+};
+
+export const useCustomizeTitle = (initialData?: string): SWRResponse<string, Error> => {
+  return useStaticSWR('CustomizeTitle', initialData);
 };
 
 /** **********************************************************
